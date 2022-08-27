@@ -18,11 +18,21 @@ app.post('/sign-up',(req, res) => {
 
 app.post('/tweets', (req, res) => {
     const {username,tweet} = req.body;
-    tweets.push({username, tweet});
+    let currentUser = user.find( e => e.username === username);
+
+    tweets.push({username, 
+                 tweet, 
+                 avatar : currentUser.avatar});
 
     res.sendStatus(200)
 
 })
 
+app.get('/tweets', (req, res) => {
+    const recentTweets = tweets.slice(-10);
 
-app.listen(5000, ()=>console.log('listening on port 5000'));
+    res.send([...recentTweets].reverse());
+
+})
+
+app.listen(5000);
