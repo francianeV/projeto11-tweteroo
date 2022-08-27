@@ -5,18 +5,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const user = [{ username:'',
-                avatar:'',}]
+const user = []
 
-const tweet = [{username:'',
-                tweet:''}]               
+const tweets = []               
 
 app.post('/sign-up',(req, res) => {
-    const loginUser = req.body;
-    user.push(loginUser);
-    
-    console.log(req.body)
-    res.send('ok');
+    const {username, avatar} = req.body;
+    user.push({username, avatar});
+
+    res.sendStatus(200);
+})
+
+app.post('/tweets', (req, res) => {
+    const {username,tweet} = req.body;
+    tweets.push({username, tweet});
+
+    res.sendStatus(200)
+
 })
 
 
